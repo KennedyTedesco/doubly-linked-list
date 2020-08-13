@@ -12,10 +12,10 @@ This implementation covers a set of operations, such as:
 
 **Insertion**
 
-- `*insert_front()` – Inserts a new node as the first node.
-- `*insert_back()` – Inserts a new node at the end as the last node (it's a push operation).
-- `*insert_before()` – Given a node, inserts a new node before this node.
-- `*insert_after()` – Inserts a new node after this node.
+- `insert_front()` – Inserts a new node as the first node.
+- `insert_back()` – Inserts a new node at the end as the last node (it's a push operation).
+- `insert_before()` – Given a node, inserts a new node before this node.
+- `insert_after()` – Inserts a new node after this node.
 
 **Deletion**
 
