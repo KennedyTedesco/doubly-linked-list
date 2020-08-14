@@ -23,13 +23,13 @@ This implementation covers a set of operations, such as:
 - `void delete_first_node()` (complexity: `O(1)`) - Delete the first node – Deletes the first node in the list.
 - `void delete_last_node()` (complexity: `O(1)`) – Deletes the last node in the list.
 
-**Reverse**
-
-Reverses the nodes, so the last one becomes the first one.
-
 **Search**
 
  - `node_t *list_search()` (complexity: `O(n)`) - Used to search for a particular node in the list.
+
+**Reverse**
+
+Reverses the nodes, so the last one becomes the first one.
 
 ### Running tests
 
