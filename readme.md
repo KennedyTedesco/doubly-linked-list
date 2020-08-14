@@ -12,10 +12,10 @@ This implementation covers a set of operations, such as:
 
 **Insertion**
 
-- `insert_front()` – Inserts a new node as the first node. **Complexity:** `O(1)`.
-- `insert_back()` – Inserts a new node at the end as the last node (it's a push operation). **Complexity:** `O(1)`.
-- `insert_before()` – Given a node, inserts a new node before it. **Complexity:** `O(n)`.
-- `insert_after()` – Given a node, inserts a new node after it. **Complexity:** `O(n)`.
+- `insert_front()` (complexity: `O(1)`) - Inserts a new node as the first node.
+- `insert_back()` (complexity: `O(1)`) – Inserts a new node at the end as the last node (it's a push operation).
+- `insert_before()` (complexity: `O(1)`) – Given a node, inserts a new node before it.
+- `insert_after()` (complexity: `O(1)`) – Given a node, inserts a new node after it.
 
 **Deletion**
 
@@ -29,7 +29,7 @@ Reverses the nodes, so the last one becomes the first one.
 
 **Search**
 
- - `list_search()` - Used to search for a particular node in the list. **Complexity:** `O(n)`.
+ - `list_search()` (complexity: `O(n)`) - Used to search for a particular node in the list.
 
 ### Running tests
 
