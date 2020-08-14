@@ -4,6 +4,22 @@
 #include "../list.h"
 #include "../iterator.h"
 
+typedef struct car {
+  int year;
+  char name;
+} car_t;
+
+car_t *makeCar(int year, const char *name) {
+  car_t *car = malloc(sizeof(car_t));
+  car->name = *name;
+  car->year = year;
+  return car;
+}
+
+void freeCar(car_t *car) {
+  free(car);
+}
+
 void setUp(void) {}
 void tearDown(void) {}
 
@@ -198,6 +214,22 @@ void test_delete_first_and_last(void) {
   list_destroy(list);
 }
 
+void test_delete_with_dynamic_data(void) {
+  list_t *list = list_create();
+  list->free = (list_free_func_t)&freeCar;
+
+  insert_back(list, makeCar(1990, "car_a"));
+  insert_back(list, makeCar(1991, "car_b"));
+  insert_front(list, makeCar(1992, "car_c"));
+  insert_front(list, makeCar(1992, "car_d"));
+  TEST_ASSERT_EQUAL_INT(4, list->len);
+
+  delete_last_node(list);
+  TEST_ASSERT_EQUAL_INT(3, list->len);
+
+  list_destroy(list);
+}
+
 int main(void) {
   UNITY_BEGIN();
 
@@ -209,6 +241,7 @@ int main(void) {
   RUN_TEST(test_insert_before);
   RUN_TEST(test_delete_node);
   RUN_TEST(test_delete_first_and_last);
+  RUN_TEST(test_delete_with_dynamic_data);
 
   return UNITY_END();
 }

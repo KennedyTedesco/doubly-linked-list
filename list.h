@@ -11,12 +11,14 @@ typedef struct node {
 
 node_t *node_create(void *data);
 
+typedef void (*list_free_func_t)(const void *data);
 typedef bool (*list_match_func_t)(const void *data_a, const void *data_b);
 
 typedef struct list {
   node_t *head;
   node_t *tail;
   unsigned int len;
+  list_free_func_t free;
   list_match_func_t match;
 } list_t;
 

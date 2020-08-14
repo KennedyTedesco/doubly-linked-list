@@ -3,6 +3,14 @@
 #include "list.h"
 #include "iterator.h"
 
+static void free_node(list_t *list, node_t *node) {
+  if (list->free != NULL) {
+	list->free(node->data);
+  }
+
+  free(node);
+}
+
 list_t *list_create() {
   list_t *list = malloc(sizeof(list_t));
 
@@ -13,6 +21,7 @@ list_t *list_create() {
   list->len = 0;
   list->head = NULL;
   list->tail = NULL;
+  list->free = NULL;
   list->match = NULL;
 
   return list;
@@ -129,7 +138,7 @@ void delete_node(list_t *list, node_t *node) {
 
   --list->len;
 
-  free(node);
+  free_node(list, node);
 }
 
 void delete_first_node(list_t *list) {
@@ -151,7 +160,7 @@ void list_destroy(list_t *list) {
   while (next != NULL) {
 	cur = next;
 	next = next->next;
-	free(cur);
+	free_node(list, cur);
   }
 
   free(list);
