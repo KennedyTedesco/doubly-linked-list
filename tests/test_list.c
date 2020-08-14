@@ -116,6 +116,8 @@ void test_insert_after(void) {
   TEST_ASSERT_EQUAL_PTR(go->next, csharp);
   TEST_ASSERT_EQUAL_PTR(csharp->prev, go);
 
+  TEST_ASSERT_EQUAL_INT(4, list->len);
+
   list_destroy(list);
 }
 
@@ -133,6 +135,8 @@ void test_insert_before(void) {
   TEST_ASSERT_EQUAL_PTR(go->prev, php);
   TEST_ASSERT_EQUAL_PTR(go->next, java);
   TEST_ASSERT_EQUAL_PTR(php->next, go);
+
+  TEST_ASSERT_EQUAL_INT(4, list->len);
 
   list_destroy(list);
 }

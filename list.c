@@ -78,6 +78,8 @@ node_t *insert_after(list_t *list, node_t *node, void *data) {
   node->next->prev = newNode;
   node->next = newNode;
 
+  list->len++;
+
   return newNode;
 }
 
@@ -92,6 +94,8 @@ node_t *insert_before(list_t *list, node_t *node, void *data) {
 
   node->prev->next = newNode;
   node->prev = newNode;
+
+  list->len++;
 
   return newNode;
 }
