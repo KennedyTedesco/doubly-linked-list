@@ -66,23 +66,50 @@ node_t *insert_back(list_t *list, void *data) {
   return node;
 }
 
+node_t *insert_after(list_t *list, node_t *node, void *data) {
+  if (node->next == NULL) {
+	return insert_back(list, data);
+  }
+
+  node_t *newNode = node_create(data);
+  newNode->prev = node;
+  newNode->next = node->next;
+
+  node->next->prev = newNode;
+  node->next = newNode;
+
+  return newNode;
+}
+
+node_t *insert_before(list_t *list, node_t *node, void *data) {
+  if (node->prev == NULL) {
+	return insert_front(list, data);
+  }
+
+  node_t *newNode = node_create(data);
+  newNode->next = node;
+  newNode->prev = node->prev;
+
+  node->prev->next = newNode;
+  node->prev = newNode;
+
+  return newNode;
+}
+
 node_t *list_search(list_t *list, void *data) {
   iterator_t *iterator = iterator_from_list(list, LIST_HEAD);
-
   node_t *node = iterator->next;
+
   while (node != NULL) {
-	if (list->match && list->match(node->data, data)) {
-	  iterator_destroy(iterator);
-	  return node;
-	}
-	if (data == node->data) {
-	  iterator_destroy(iterator);
-	  return node;
+	if ((list->match && list->match(node->data, data))
+		|| data == node->data) {
+	  break;
 	}
 	node = iterator_next(iterator);
   }
 
-  return NULL;
+  iterator_destroy(iterator);
+  return node;
 }
 
 void list_destroy(list_t *list) {

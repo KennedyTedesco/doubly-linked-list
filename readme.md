@@ -12,16 +12,16 @@ This implementation covers a set of operations, such as:
 
 **Insertion**
 
-- `insert_front()` – Inserts a new node as the first node.
-- `insert_back()` – Inserts a new node at the end as the last node (it's a push operation).
-- `insert_before()` – Given a node, inserts a new node before this node.
-- `insert_after()` – Inserts a new node after this node.
+- `insert_front()` – Inserts a new node as the first node. **Complexity:** `O(1)`.
+- `insert_back()` – Inserts a new node at the end as the last node (it's a push operation). **Complexity:** `O(1)`.
+- `insert_before()` – Given a node, inserts a new node before it. **Complexity:** `O(n)`.
+- `insert_after()` – Given a node, inserts a new node after it. **Complexity:** `O(n)`.
 
 **Deletion**
 
-- Delete the first node – Deletes the first node in the list
-- Delete the last node – Deletes the last node in the list.
-- Delete a node by its data – Given the data, the operation matches it with the node data in the linked list and deletes that node.
+- Delete the first node – Deletes the first node in the list. **Complexity:** `O(1)`.
+- Delete the last node – Deletes the last node in the list. **Complexity:** `O(1)`.
+- Delete a node by its data – Given the data, the operation matches it with the node data in the linked list and deletes that node. **Complexity:** `O(n)`.
 
 **Reverse**
 
@@ -29,7 +29,7 @@ Reverses the nodes, so the last one becomes the first one.
 
 **Search**
 
-Used to search for a particular node in the list.
+ - `list_search()` - Used to search for a particular node in the list. **Complexity:** `O(n)`.
 
 ### Running tests
 

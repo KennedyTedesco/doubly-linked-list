@@ -7,14 +7,8 @@
 void setUp(void) {}
 void tearDown(void) {}
 
-bool match_int(const int *data_a, const int *data_b) {
-  return *data_a == *data_b;
-}
-
 void test_list_search(void) {
-  node_t *matched = NULL;
   list_t *list = list_create();
-  list->match = (list_match_func_t)&match_int;
 
   insert_back(list, "foo");
   insert_back(list, "bar");
@@ -22,14 +16,11 @@ void test_list_search(void) {
   insert_back(list, "go");
   insert_back(list, "rust");
 
-  matched = list_search(list, "php");
-  TEST_ASSERT_EQUAL_STRING("php", matched->data);
+  TEST_ASSERT_EQUAL_STRING("php", list_search(list, "php")->data);
+  TEST_ASSERT_EQUAL_STRING("rust", list_search(list, "rust")->data);
+  TEST_ASSERT_NULL(list_search(list, "c#"));
 
-  matched = list_search(list, "rust");
-  TEST_ASSERT_EQUAL_STRING("rust", matched->data);
-
-  matched = list_search(list, "c#");
-  TEST_ASSERT_NULL(matched);
+  list_destroy(list);
 }
 
 void test_iterator(void) {
@@ -110,6 +101,42 @@ void test_insert_back(void) {
   list_destroy(list);
 }
 
+void test_insert_after(void) {
+  list_t *list = list_create();
+  insert_back(list, "php");
+  insert_back(list, "java");
+  insert_back(list, "c#");
+
+  node_t *java = list_search(list, "java");
+  node_t *go = insert_after(list, java, "go");
+  node_t *csharp = list_search(list, "c#");
+
+  TEST_ASSERT_EQUAL_PTR(java->next, go);
+  TEST_ASSERT_EQUAL_PTR(go->prev, java);
+  TEST_ASSERT_EQUAL_PTR(go->next, csharp);
+  TEST_ASSERT_EQUAL_PTR(csharp->prev, go);
+
+  list_destroy(list);
+}
+
+void test_insert_before(void) {
+  list_t *list = list_create();
+  insert_back(list, "php");
+  insert_back(list, "java");
+  insert_back(list, "c#");
+
+  node_t *php = list_search(list, "php");
+  node_t *java = list_search(list, "java");
+  node_t *go = insert_before(list, java, "go");
+
+  TEST_ASSERT_EQUAL_PTR(java->prev, go);
+  TEST_ASSERT_EQUAL_PTR(go->prev, php);
+  TEST_ASSERT_EQUAL_PTR(go->next, java);
+  TEST_ASSERT_EQUAL_PTR(php->next, go);
+
+  list_destroy(list);
+}
+
 int main(void) {
   UNITY_BEGIN();
 
@@ -117,6 +144,8 @@ int main(void) {
   RUN_TEST(test_insert_back);
   RUN_TEST(test_insert_front);
   RUN_TEST(test_list_search);
+  RUN_TEST(test_insert_after);
+  RUN_TEST(test_insert_before);
 
   return UNITY_END();
 }
