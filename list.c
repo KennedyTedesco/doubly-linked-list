@@ -109,6 +109,7 @@ node_t *list_search(list_t *list, void *data) {
   }
 
   iterator_destroy(iterator);
+
   return node;
 }
 
