@@ -103,18 +103,20 @@ void test_insert_back(void) {
 
 void test_insert_after(void) {
   list_t *list = list_create();
-  insert_back(list, "php");
-  insert_back(list, "java");
-  insert_back(list, "c#");
 
-  node_t *java = list_search(list, "java");
-  node_t *go = insert_after(list, java, "go");
-  node_t *csharp = list_search(list, "c#");
+  node_t *php = insert_back(list, "php");
+  node_t *java = insert_back(list, "java");
+  node_t *csharp = insert_back(list, "c#");
 
-  TEST_ASSERT_EQUAL_PTR(java->next, go);
-  TEST_ASSERT_EQUAL_PTR(go->prev, java);
-  TEST_ASSERT_EQUAL_PTR(go->next, csharp);
-  TEST_ASSERT_EQUAL_PTR(csharp->prev, go);
+  node_t *go = insert_after(list, csharp, "go");
+
+  TEST_ASSERT_NULL(go->next);
+  TEST_ASSERT_EQUAL_PTR(go->prev, csharp);
+  TEST_ASSERT_EQUAL_PTR(csharp->next, go);
+  TEST_ASSERT_EQUAL_PTR(csharp->prev, java);
+
+  TEST_ASSERT_EQUAL_PTR(list->head, php);
+  TEST_ASSERT_EQUAL_PTR(list->tail, go);
 
   TEST_ASSERT_EQUAL_INT(4, list->len);
 
@@ -123,20 +125,75 @@ void test_insert_after(void) {
 
 void test_insert_before(void) {
   list_t *list = list_create();
-  insert_back(list, "php");
-  insert_back(list, "java");
-  insert_back(list, "c#");
 
-  node_t *php = list_search(list, "php");
-  node_t *java = list_search(list, "java");
-  node_t *go = insert_before(list, java, "go");
+  node_t *php = insert_back(list, "php");
+  node_t *java = insert_back(list, "java");
+  node_t *csharp = insert_back(list, "c#");
 
-  TEST_ASSERT_EQUAL_PTR(java->prev, go);
-  TEST_ASSERT_EQUAL_PTR(go->prev, php);
-  TEST_ASSERT_EQUAL_PTR(go->next, java);
-  TEST_ASSERT_EQUAL_PTR(php->next, go);
+  node_t *go = insert_before(list, php, "go");
+
+  TEST_ASSERT_NULL(go->prev);
+  TEST_ASSERT_EQUAL_PTR(go->next, php);
+  TEST_ASSERT_EQUAL_PTR(php->next, java);
+  TEST_ASSERT_EQUAL_PTR(php->prev, go);
+
+  TEST_ASSERT_EQUAL_PTR(list->head, go);
+  TEST_ASSERT_EQUAL_PTR(list->tail, csharp);
 
   TEST_ASSERT_EQUAL_INT(4, list->len);
+
+  list_destroy(list);
+}
+
+void test_delete_node(void) {
+  list_t *list = list_create();
+
+  node_t *php = insert_back(list, "php");
+  node_t *java = insert_back(list, "java");
+  node_t *node = insert_back(list, "node");
+  node_t *go = insert_back(list, "go");
+
+  TEST_ASSERT_EQUAL_INT(4, list->len);
+
+  delete_node(list, go);
+  TEST_ASSERT_EQUAL_INT(3, list->len);
+  TEST_ASSERT_EQUAL_PTR(list->tail, node);
+  TEST_ASSERT_NULL(node->next);
+  TEST_ASSERT_EQUAL_PTR(node->prev, java);
+
+  delete_node(list, php);
+  TEST_ASSERT_EQUAL_INT(2, list->len);
+  TEST_ASSERT_EQUAL_PTR(list->head, java);
+  TEST_ASSERT_NULL(java->prev);
+  TEST_ASSERT_EQUAL_PTR(java->next, node);
+
+  delete_node(list, node);
+  TEST_ASSERT_EQUAL_INT(1, list->len);
+  TEST_ASSERT_EQUAL_PTR(list->head, java);
+  TEST_ASSERT_EQUAL_PTR(list->tail, java);
+
+  list_destroy(list);
+}
+
+void test_delete_first_and_last(void) {
+  list_t *list = list_create();
+
+  node_t *php = insert_back(list, "php");
+  node_t *java = insert_back(list, "java");
+  node_t *node = insert_back(list, "node");
+  node_t *go = insert_back(list, "go");
+
+  TEST_ASSERT_EQUAL_PTR(list->head, php);
+  TEST_ASSERT_EQUAL_PTR(list->tail, go);
+  TEST_ASSERT_EQUAL_INT(4, list->len);
+
+  delete_first_node(list);
+  TEST_ASSERT_EQUAL_INT(3, list->len);
+  TEST_ASSERT_EQUAL_PTR(list->head, java);
+
+  delete_last_node(list);
+  TEST_ASSERT_EQUAL_INT(2, list->len);
+  TEST_ASSERT_EQUAL_PTR(list->tail, node);
 
   list_destroy(list);
 }
@@ -150,6 +207,8 @@ int main(void) {
   RUN_TEST(test_list_search);
   RUN_TEST(test_insert_after);
   RUN_TEST(test_insert_before);
+  RUN_TEST(test_delete_node);
+  RUN_TEST(test_delete_first_and_last);
 
   return UNITY_END();
 }

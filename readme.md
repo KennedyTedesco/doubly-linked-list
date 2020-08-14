@@ -12,16 +12,16 @@ This implementation covers a set of operations, such as:
 
 **Insertion**
 
-- `insert_front()` (complexity: `O(1)`) - Inserts a new node as the first node.
-- `insert_back()` (complexity: `O(1)`) – Inserts a new node at the end as the last node (it's a push operation).
-- `insert_before()` (complexity: `O(1)`) – Given a node, inserts a new node before it.
-- `insert_after()` (complexity: `O(1)`) – Given a node, inserts a new node after it.
+- `node_t *insert_front()` (complexity: `O(1)`) - Inserts a new node as the first node.
+- `node_t *insert_back()` (complexity: `O(1)`) – Inserts a new node at the end as the last node (it's a push operation).
+- `node_t *insert_before()` (complexity: `O(1)`) – Given a node, inserts a new node before it.
+- `node_t *insert_after()` (complexity: `O(1)`) – Given a node, inserts a new node after it.
 
 **Deletion**
 
-- Delete the first node – Deletes the first node in the list. **Complexity:** `O(1)`.
-- Delete the last node – Deletes the last node in the list. **Complexity:** `O(1)`.
-- Delete a node by its data – Given the data, the operation matches it with the node data in the linked list and deletes that node. **Complexity:** `O(n)`.
+- `void delete_node()` (complexity: `O(1)`) – Deletes the given node.
+- `void delete_first_node()` (complexity: `O(1)`) - Delete the first node – Deletes the first node in the list.
+- `void delete_last_node()` (complexity: `O(1)`) – Deletes the last node in the list.
 
 **Reverse**
 
@@ -29,7 +29,7 @@ Reverses the nodes, so the last one becomes the first one.
 
 **Search**
 
- - `list_search()` (complexity: `O(n)`) - Used to search for a particular node in the list.
+ - `node_t *list_search()` (complexity: `O(n)`) - Used to search for a particular node in the list.
 
 ### Running tests
 

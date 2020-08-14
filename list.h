@@ -21,13 +21,16 @@ typedef struct list {
 } list_t;
 
 list_t *list_create();
+node_t *list_search(list_t *list, void *data);
 
 node_t *insert_front(list_t *list, void *data);
 node_t *insert_back(list_t *list, void *data);
 node_t *insert_after(list_t *list, node_t *node, void *data);
 node_t *insert_before(list_t *list, node_t *node, void *data);
 
-node_t *list_search(list_t *list, void *data);
+void delete_first_node(list_t *list);
+void delete_last_node(list_t *list);
+void delete_node(list_t *list, node_t *node);
 
 void list_destroy(list_t *list);
 

@@ -45,7 +45,7 @@ node_t *insert_front(list_t *list, void *data) {
 	list->head = node;
   }
 
-  list->len++;
+  ++list->len;
 
   return node;
 }
@@ -61,7 +61,7 @@ node_t *insert_back(list_t *list, void *data) {
 
   list->tail->next = node;
   list->tail = node;
-  list->len++;
+  ++list->len;
 
   return node;
 }
@@ -78,7 +78,7 @@ node_t *insert_after(list_t *list, node_t *node, void *data) {
   node->next->prev = newNode;
   node->next = newNode;
 
-  list->len++;
+  ++list->len;
 
   return newNode;
 }
@@ -95,7 +95,7 @@ node_t *insert_before(list_t *list, node_t *node, void *data) {
   node->prev->next = newNode;
   node->prev = newNode;
 
-  list->len++;
+  ++list->len;
 
   return newNode;
 }
@@ -115,6 +115,33 @@ node_t *list_search(list_t *list, void *data) {
   iterator_destroy(iterator);
 
   return node;
+}
+
+void delete_node(list_t *list, node_t *node) {
+  if (node->prev == NULL) {
+	(list->head = node->next)->prev = NULL;
+  } else if (node->next == NULL) {
+	(list->tail = node->prev)->next = NULL;
+  } else {
+	node->prev->next = node->next;
+	node->next->prev = node->prev;
+  }
+
+  --list->len;
+
+  free(node);
+}
+
+void delete_first_node(list_t *list) {
+  if (list->head != NULL) {
+	delete_node(list, list->head);
+  }
+}
+
+void delete_last_node(list_t *list) {
+  if (list->tail != NULL) {
+	delete_node(list, list->tail);
+  }
 }
 
 void list_destroy(list_t *list) {
