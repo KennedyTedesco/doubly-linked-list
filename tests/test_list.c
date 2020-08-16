@@ -230,6 +230,31 @@ void test_delete_with_dynamic_data(void) {
   list_destroy(list);
 }
 
+void test_list_reverse(void) {
+  list_t *list = list_create();
+  node_t *php = insert_back(list, "PHP");
+  node_t *java = insert_back(list, "Java");
+  node_t *rust = insert_back(list, "Rust");
+  node_t *node = insert_back(list, "Node");
+
+  TEST_ASSERT_EQUAL_PTR(list->head, php);
+  TEST_ASSERT_EQUAL_PTR(list->head->next, java);
+  TEST_ASSERT_EQUAL_PTR(list->tail, node);
+  TEST_ASSERT_EQUAL_PTR(list->tail->prev, rust);
+
+  list_reverse(list);
+
+  TEST_ASSERT_EQUAL_PTR(list->head, node);
+  TEST_ASSERT_EQUAL_PTR(list->tail, php);
+
+  TEST_ASSERT_EQUAL_PTR(node->prev, NULL);
+  TEST_ASSERT_EQUAL_PTR(node->next, rust);
+  TEST_ASSERT_EQUAL_PTR(php->next, NULL);
+  TEST_ASSERT_EQUAL_PTR(php->prev, java);
+
+  list_destroy(list);
+}
+
 int main(void) {
   UNITY_BEGIN();
 
@@ -237,6 +262,7 @@ int main(void) {
   RUN_TEST(test_insert_back);
   RUN_TEST(test_insert_front);
   RUN_TEST(test_list_search);
+  RUN_TEST(test_list_reverse);
   RUN_TEST(test_insert_after);
   RUN_TEST(test_insert_before);
   RUN_TEST(test_delete_node);

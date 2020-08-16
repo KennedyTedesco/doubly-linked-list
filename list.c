@@ -111,19 +111,19 @@ node_t *insert_before(list_t *list, node_t *node, void *data) {
 
 node_t *list_search(list_t *list, void *data) {
   iterator_t *iterator = iterator_from_list(list, LIST_HEAD);
-  node_t *node = iterator->next;
+  node_t *current = iterator->next;
 
-  while (node != NULL) {
-	if ((list->match && list->match(node->data, data))
-		|| data == node->data) {
+  while (current != NULL) {
+	if ((list->match && list->match(current->data, data))
+		|| data == current->data) {
 	  break;
 	}
-	node = iterator_next(iterator);
+	current = iterator_next(iterator);
   }
 
   iterator_destroy(iterator);
 
-  return node;
+  return current;
 }
 
 void delete_node(list_t *list, node_t *node) {
@@ -153,15 +153,40 @@ void delete_last_node(list_t *list) {
   }
 }
 
-void list_destroy(list_t *list) {
-  node_t *cur = NULL;
-  node_t *next = list->head;
+void list_reverse(list_t *list) {
+  iterator_t *iterator = iterator_from_list(list, LIST_TAIL);
 
-  while (next != NULL) {
-	cur = next;
-	next = next->next;
-	free_node(list, cur);
+  node_t *current = iterator->next;
+  node_t *next = NULL, *prev = NULL;
+
+  while (current != NULL) {
+	prev = iterator_next(iterator);
+
+	current->prev = next;
+	current->next = prev;
+
+	next = current;
+	current = prev;
+  }
+
+  list->head = list->tail;
+  list->tail = next;
+
+  iterator_destroy(iterator);
+}
+
+void list_destroy(list_t *list) {
+  iterator_t *iterator = iterator_from_list(list, LIST_HEAD);
+
+  node_t *next = NULL;
+  node_t *current = iterator->next;
+
+  while (current != NULL) {
+	next = current->next;
+	free_node(list, current);
+	current = next;
   }
 
   free(list);
+  iterator_destroy(iterator);
 }

@@ -29,7 +29,7 @@ This implementation covers a set of operations, such as:
 
 **Reverse**
 
-Reverses the nodes, so the last one becomes the first one.
+ - `void list_reverse()` complexity: `O(n)` - Reverses the nodes, so the last one becomes the first one and so on.
 
 ### Running tests
 

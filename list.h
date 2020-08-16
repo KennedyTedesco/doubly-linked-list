@@ -23,6 +23,7 @@ typedef struct list {
 } list_t;
 
 list_t *list_create();
+void list_reverse(list_t *list);
 node_t *list_search(list_t *list, void *data);
 
 node_t *insert_front(list_t *list, void *data);
