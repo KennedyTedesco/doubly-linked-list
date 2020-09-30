@@ -53,6 +53,6 @@ Testing using Valgrind (a tool to find memory leaks):
 $ meson test -C builddir/ -v --wrap=valgrind
 ```
 
-### Contributing
+### What see next?
 
-Feel free to send a PR. =D
+- [Dynamic array](https://github.com/KennedyTedesco/dynamic-array)
