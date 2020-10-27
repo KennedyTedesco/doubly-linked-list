@@ -1,4 +1,5 @@
 #include <stdlib.h>
+
 #include "iterator.h"
 
 iterator_t *iterator_from_list(list_t *list, list_direction_t direction) {
