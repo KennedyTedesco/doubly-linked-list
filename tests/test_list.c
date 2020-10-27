@@ -8,16 +8,16 @@
 typedef struct car {
   int year;
   char *name;
-} car;
+} car_t;
 
-car *car_ctor(int year, const char *name) {
-  car *car = malloc(sizeof(struct car));
+car_t *car_ctor(int year, const char *name) {
+  car_t *car = malloc(sizeof(car_t));
   car->name = strdup(name);
   car->year = year;
   return car;
 }
 
-void car_dtor(car *car) {
+void car_dtor(car_t *car) {
   free(car);
 }
 
