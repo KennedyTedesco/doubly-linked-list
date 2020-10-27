@@ -11,8 +11,8 @@ typedef struct node {
 
 node_t *node_create(void *data);
 
-typedef void (*list_free_func_t)(const void *data);
-typedef bool (*list_match_func_t)(const void *data_a, const void *data_b);
+typedef void (*list_free_func_t)(const void *);
+typedef bool (*list_match_func_t)(const void *, const void *);
 
 typedef struct list {
   node_t *head;
