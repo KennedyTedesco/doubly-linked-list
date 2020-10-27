@@ -1,17 +1,18 @@
 #include "unity.h"
 #include <stdlib.h>
+#include <string.h>
 
 #include "../list.h"
 #include "../iterator.h"
 
 typedef struct car {
   int year;
-  char name;
+  char *name;
 } car_t;
 
 car_t *makeCar(int year, const char *name) {
   car_t *car = malloc(sizeof(car_t));
-  car->name = *name;
+  car->name = strdup(name);
   car->year = year;
   return car;
 }
