@@ -8,16 +8,16 @@
 typedef struct car {
   int year;
   char *name;
-} car_t;
+} car;
 
-car_t *makeCar(int year, const char *name) {
-  car_t *car = malloc(sizeof(car_t));
+car *car_ctor(int year, const char *name) {
+  car *car = malloc(sizeof(struct car));
   car->name = strdup(name);
   car->year = year;
   return car;
 }
 
-void freeCar(car_t *car) {
+void freeCar(car *car) {
   free(car);
 }
 
@@ -219,10 +219,10 @@ void test_delete_with_dynamic_data(void) {
   list_t *list = list_create();
   list->free = (list_free_func_t)&freeCar;
 
-  insert_back(list, makeCar(1990, "car_a"));
-  insert_back(list, makeCar(1991, "car_b"));
-  insert_front(list, makeCar(1992, "car_c"));
-  insert_front(list, makeCar(1992, "car_d"));
+  insert_back(list, car_ctor(1990, "car_a"));
+  insert_back(list, car_ctor(1991, "car_b"));
+  insert_front(list, car_ctor(1992, "car_c"));
+  insert_front(list, car_ctor(1992, "car_d"));
   TEST_ASSERT_EQUAL_INT(4, list->len);
 
   delete_last_node(list);
