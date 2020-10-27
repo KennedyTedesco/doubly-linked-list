@@ -17,7 +17,7 @@ typedef bool (*list_match_func_t)(const void *, const void *);
 typedef struct list {
   node_t *head;
   node_t *tail;
-  unsigned int len;
+  size_t length;
   list_free_func_t free;
   list_match_func_t match;
 } list_t;

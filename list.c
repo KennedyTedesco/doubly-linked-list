@@ -4,7 +4,6 @@
 #include "iterator.h"
 
 static void free_node(list_t *list, node_t *node) {
-  // Has a function pointer to deallocate the memory?
   if (list->free != NULL) {
 	list->free(node->data);
   }
@@ -19,7 +18,7 @@ list_t *list_create() {
 	return NULL;
   }
 
-  list->len = 0;
+  list->length = 0;
   list->head = NULL;
   list->tail = NULL;
   list->free = NULL;
@@ -55,7 +54,7 @@ node_t *insert_front(list_t *list, void *data) {
 	list->head = node;
   }
 
-  ++list->len;
+  ++list->length;
 
   return node;
 }
@@ -71,7 +70,7 @@ node_t *insert_back(list_t *list, void *data) {
 
   list->tail->next = node;
   list->tail = node;
-  ++list->len;
+  ++list->length;
 
   return node;
 }
@@ -88,7 +87,7 @@ node_t *insert_after(list_t *list, node_t *node, void *data) {
   node->next->prev = newNode;
   node->next = newNode;
 
-  ++list->len;
+  ++list->length;
 
   return newNode;
 }
@@ -105,7 +104,7 @@ node_t *insert_before(list_t *list, node_t *node, void *data) {
   node->prev->next = newNode;
   node->prev = newNode;
 
-  ++list->len;
+  ++list->length;
 
   return newNode;
 }
@@ -137,7 +136,7 @@ void delete_node(list_t *list, node_t *node) {
 	node->next->prev = node->prev;
   }
 
-  --list->len;
+  --list->length;
 
   free_node(list, node);
 }

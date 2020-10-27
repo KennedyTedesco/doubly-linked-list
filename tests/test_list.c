@@ -73,14 +73,14 @@ void test_insert_back(void) {
 
   node_t *node;
   list_t *list = list_create();
-  TEST_ASSERT_EQUAL_INT(0, list->len);
+  TEST_ASSERT_EQUAL_INT(0, list->length);
 
   node = insert_back(list, &values[0]);
   TEST_ASSERT_NULL(node->prev);
   TEST_ASSERT_NULL(node->next);
   TEST_ASSERT_EQUAL_INT(2, *(int *)list->head->data);
   TEST_ASSERT_EQUAL_INT(2, *(int *)list->tail->data);
-  TEST_ASSERT_EQUAL_INT(1, list->len);
+  TEST_ASSERT_EQUAL_INT(1, list->length);
 
   node = insert_back(list, &values[1]);
   TEST_ASSERT_NULL(node->next);
@@ -88,7 +88,7 @@ void test_insert_back(void) {
   TEST_ASSERT_EQUAL_INT(4, *(int *)node->prev->next->data);
   TEST_ASSERT_EQUAL_INT(2, *(int *)list->head->data);
   TEST_ASSERT_EQUAL_INT(4, *(int *)list->tail->data);
-  TEST_ASSERT_EQUAL_INT(2, list->len);
+  TEST_ASSERT_EQUAL_INT(2, list->length);
 
   node = insert_back(list, &values[2]);
   TEST_ASSERT_NULL(node->next);
@@ -96,7 +96,7 @@ void test_insert_back(void) {
   TEST_ASSERT_EQUAL_INT(8, *(int *)node->prev->next->data);
   TEST_ASSERT_EQUAL_INT(2, *(int *)list->head->data);
   TEST_ASSERT_EQUAL_INT(8, *(int *)list->tail->data);
-  TEST_ASSERT_EQUAL_INT(3, list->len);
+  TEST_ASSERT_EQUAL_INT(3, list->length);
 
   list_destroy(list);
 }
@@ -118,7 +118,7 @@ void test_insert_after(void) {
   TEST_ASSERT_EQUAL_PTR(list->head, php);
   TEST_ASSERT_EQUAL_PTR(list->tail, go);
 
-  TEST_ASSERT_EQUAL_INT(4, list->len);
+  TEST_ASSERT_EQUAL_INT(4, list->length);
 
   list_destroy(list);
 }
@@ -140,7 +140,7 @@ void test_insert_before(void) {
   TEST_ASSERT_EQUAL_PTR(list->head, go);
   TEST_ASSERT_EQUAL_PTR(list->tail, csharp);
 
-  TEST_ASSERT_EQUAL_INT(4, list->len);
+  TEST_ASSERT_EQUAL_INT(4, list->length);
 
   list_destroy(list);
 }
@@ -153,22 +153,22 @@ void test_delete_node(void) {
   node_t *node = insert_back(list, "node");
   node_t *go = insert_back(list, "go");
 
-  TEST_ASSERT_EQUAL_INT(4, list->len);
+  TEST_ASSERT_EQUAL_INT(4, list->length);
 
   delete_node(list, go);
-  TEST_ASSERT_EQUAL_INT(3, list->len);
+  TEST_ASSERT_EQUAL_INT(3, list->length);
   TEST_ASSERT_EQUAL_PTR(list->tail, node);
   TEST_ASSERT_NULL(node->next);
   TEST_ASSERT_EQUAL_PTR(node->prev, java);
 
   delete_node(list, php);
-  TEST_ASSERT_EQUAL_INT(2, list->len);
+  TEST_ASSERT_EQUAL_INT(2, list->length);
   TEST_ASSERT_EQUAL_PTR(list->head, java);
   TEST_ASSERT_NULL(java->prev);
   TEST_ASSERT_EQUAL_PTR(java->next, node);
 
   delete_node(list, node);
-  TEST_ASSERT_EQUAL_INT(1, list->len);
+  TEST_ASSERT_EQUAL_INT(1, list->length);
   TEST_ASSERT_EQUAL_PTR(list->head, java);
   TEST_ASSERT_EQUAL_PTR(list->tail, java);
 
@@ -185,14 +185,14 @@ void test_delete_first_and_last(void) {
 
   TEST_ASSERT_EQUAL_PTR(list->head, php);
   TEST_ASSERT_EQUAL_PTR(list->tail, go);
-  TEST_ASSERT_EQUAL_INT(4, list->len);
+  TEST_ASSERT_EQUAL_INT(4, list->length);
 
   delete_first_node(list);
-  TEST_ASSERT_EQUAL_INT(3, list->len);
+  TEST_ASSERT_EQUAL_INT(3, list->length);
   TEST_ASSERT_EQUAL_PTR(list->head, java);
 
   delete_last_node(list);
-  TEST_ASSERT_EQUAL_INT(2, list->len);
+  TEST_ASSERT_EQUAL_INT(2, list->length);
   TEST_ASSERT_EQUAL_PTR(list->tail, node);
 
   list_destroy(list);
@@ -206,10 +206,10 @@ void test_delete_with_dynamic_data(void) {
   insert_back(list, car_ctor(1991, "car_b"));
   insert_front(list, car_ctor(1992, "car_c"));
   insert_front(list, car_ctor(1992, "car_d"));
-  TEST_ASSERT_EQUAL_INT(4, list->len);
+  TEST_ASSERT_EQUAL_INT(4, list->length);
 
   delete_last_node(list);
-  TEST_ASSERT_EQUAL_INT(3, list->len);
+  TEST_ASSERT_EQUAL_INT(3, list->length);
 
   list_destroy(list);
 }
