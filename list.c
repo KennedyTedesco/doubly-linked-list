@@ -4,6 +4,7 @@
 #include "iterator.h"
 
 static void free_node(list_t *list, node_t *node) {
+  // Has a function pointer to deallocate the memory?
   if (list->free != NULL) {
 	list->free(node->data);
   }

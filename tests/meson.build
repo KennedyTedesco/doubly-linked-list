@@ -4,7 +4,7 @@ unity_dep = dependency('unity',
 
 test('list',
     executable('test_list',
-        ['test_list.c', '../list.c', '../iterator.c'],
+        ['test_list.c', 'car.c', '../list.c', '../iterator.c'],
         dependencies: unity_dep
     )
 )
