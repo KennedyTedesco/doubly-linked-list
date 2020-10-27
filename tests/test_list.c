@@ -17,7 +17,7 @@ car *car_ctor(int year, const char *name) {
   return car;
 }
 
-void freeCar(car *car) {
+void car_dtor(car *car) {
   free(car);
 }
 
@@ -217,7 +217,7 @@ void test_delete_first_and_last(void) {
 
 void test_delete_with_dynamic_data(void) {
   list_t *list = list_create();
-  list->free = (list_free_func_t)&freeCar;
+  list->free = (list_free_func_t)&car_dtor;
 
   insert_back(list, car_ctor(1990, "car_a"));
   insert_back(list, car_ctor(1991, "car_b"));
