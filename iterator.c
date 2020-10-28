@@ -8,7 +8,7 @@ iterator_t *iterator_from_list(list_t *list, list_direction_t direction) {
 }
 
 iterator_t *iterator_from_node(node_t *node, list_direction_t direction) {
-  iterator_t *iterator = malloc(sizeof(iterator_t));
+  iterator_t *iterator = malloc(sizeof *iterator);
   if (iterator == NULL) {
 	return NULL;
   }

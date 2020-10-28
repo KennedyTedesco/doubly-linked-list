@@ -12,8 +12,7 @@ static void free_node(list_t *list, node_t *node) {
 }
 
 list_t *list_create() {
-  list_t *list = malloc(sizeof(list_t));
-
+  list_t *list = malloc(sizeof *list);
   if (list == 0) {
 	return NULL;
   }
@@ -28,8 +27,7 @@ list_t *list_create() {
 }
 
 node_t *node_create(void *data) {
-  node_t *node = malloc(sizeof(node_t));
-
+  node_t *node = malloc(sizeof *node);
   if (node == 0) {
 	return NULL;
   }
@@ -128,9 +126,11 @@ node_t *list_search(list_t *list, void *data) {
 
 void delete_node(list_t *list, node_t *node) {
   if (node->prev == NULL) {
-	(list->head = node->next)->prev = NULL;
+	list->head = node->next;
+	list->head->prev = NULL;
   } else if (node->next == NULL) {
-	(list->tail = node->prev)->next = NULL;
+	list->tail = node->prev;
+	list->tail->next = NULL;
   } else {
 	node->prev->next = node->next;
 	node->next->prev = node->prev;
